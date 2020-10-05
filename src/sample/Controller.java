@@ -7,19 +7,26 @@ import javafx.scene.control.TextArea;
 
 public class Controller {
     @FXML
-    TextArea frame;
+    private TextArea frame;
 
-    String operator="";
-    String first_Operand="";
-    String prevOperator="";
+    private String operator="";
+    private String first_Operand="";
+    private String prevOperator="";
+
+
+    @FXML
+    private Button clean;
 
     public void initialize(){
         frame.setText("0");
+        clean.setText("AC");
+
 
     }
 
     public void handleDigits(ActionEvent e){
         Button b=(Button)e.getSource();
+        clean.setText("C");
         String c=b.getText();//the button we pushed
         String prev=frame.getText();//the text on text area
 
@@ -41,6 +48,15 @@ public class Controller {
 
 
     }
+    public void signControl(){
+        //testing :for the first round it puts the - in the right side of the number
+        int digit=Integer.parseInt(frame.getText());
+        if(digit!=0){
+            digit*=(-1);
+            frame.setText(String.valueOf(digit));
+            System.out.println(frame.getText());
+        }
+    }
 
     public void handleOperator(ActionEvent e){
         Button b=(Button) e.getSource();
@@ -49,7 +65,7 @@ public class Controller {
         if (!c.equals("=")){
             operator=c;
         }else if(c.equals("=")){
-            System.out.println(first_Operand+prevOperator+frame.getText());
+            //System.out.println(first_Operand+prevOperator+frame.getText());
             int a=Integer.parseInt(first_Operand);
             int d=Integer.parseInt(frame.getText());
             switch (prevOperator){
@@ -65,8 +81,8 @@ public class Controller {
                 case "x":
                     frame.setText(String.valueOf(a*d));
                     break;
-//                case "\\%":
-//                    frame.setText(String.valueOf(a+d));
+//                case "%":
+//                    frame.setText(String.valueOf(a/100));
 //                    break;
 
             }
